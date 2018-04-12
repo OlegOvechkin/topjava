@@ -15,10 +15,10 @@ dd {
     vertical-align: top;
 }
 
-.normal {
+tr[data-mealExceed="false"] {
     color: green;
 }
 
-.exceeded {
+tr[data-mealExceed="true"] {
     color: red;
 }

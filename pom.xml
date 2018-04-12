@@ -16,26 +16,21 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <tomcat.version>8.5.15</tomcat.version>
-        <spring.version>5.0.1.RELEASE</spring.version>
-        <spring-data-jpa.version>2.0.2.RELEASE</spring-data-jpa.version>
+        <spring.version>5.0.4.RELEASE</spring.version>
 
         <!-- Logging -->
         <logback.version>1.2.3</logback.version>
         <slf4j.version>1.7.25</slf4j.version>
 
         <!--DB-->
-        <postgresql.version>42.1.4</postgresql.version>
+        <postgresql.version>42.2.1</postgresql.version>
         <!--    Tests  -->
         <junit.version>4.12</junit.version>
 
         <!-- Hibernate -->
-        <hibernate.version>5.2.12.Final</hibernate.version>
-        <hibernate-validator.version>6.0.5.Final</hibernate-validator.version>
-        <javax-el.version>3.0.1-b08</javax-el.version>
-
-        <!--Tools-->
-        <ehcache.version>3.4.0</ehcache.version>
+        <hibernate.version>5.2.15.Final</hibernate.version>
+        <hibernate-validator.version>6.0.8.Final</hibernate-validator.version>
+        <javax-el.version>3.0.1-b10</javax-el.version>
     </properties>
 
     <build>
@@ -54,7 +49,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.20.1</version>
+                <version>2.21.0</version>
                 <configuration>
                     <argLine>-Dfile.encoding=UTF-8</argLine>
                 </configuration>
@@ -95,7 +90,8 @@
         <!-- Spring -->
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>spring-context-support</artifactId>
+            <artifactId>spring-context</artifactId>
+            <version>${spring.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>commons-logging</groupId>
@@ -104,10 +100,23 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-jpa</artifactId>
-            <version>${spring-data-jpa.version}</version>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+            <version>${spring.version}</version>
         </dependency>
+
+        <!--DataBase-->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${postgresql.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+            <version>2.3.4</version>
+        </dependency>
+
 
         <!--- ORM -->
         <dependency>
@@ -129,23 +138,11 @@
             <scope>provided</scope>
         </dependency>
 
-        <dependency>
-            <groupId>javax.cache</groupId>
-            <artifactId>cache-api</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.ehcache</groupId>
-            <artifactId>ehcache</artifactId>
-            <scope>runtime</scope>
-            <version>${ehcache.version}</version>
-        </dependency>
-
         <!--Web-->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
-            <version>4.0.0</version>
+            <version>3.1.0</version>
             <scope>provided</scope>
         </dependency>
 
@@ -165,58 +162,21 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
+            <version>${spring.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
-            <version>3.8.0</version>
+            <version>3.9.1</version>
             <scope>test</scope>
         </dependency>
 
     </dependencies>
 
     <profiles>
-        <profile>
-            <id>hsqldb</id>
-            <dependencies>
-                <dependency>
-                    <groupId>org.hsqldb</groupId>
-                    <artifactId>hsqldb</artifactId>
-                    <version>2.3.4</version>
-                </dependency>
-            </dependencies>
-        </profile>
-        <profile>
-            <id>postgres</id>
-            <dependencies>
-                <dependency>
-                    <groupId>org.postgresql</groupId>
-                    <artifactId>postgresql</artifactId>
-                    <version>${postgresql.version}</version>
-                </dependency>
-                <dependency>
-                    <groupId>org.apache.tomcat</groupId>
-                    <artifactId>tomcat-jdbc</artifactId>
-                    <version>${tomcat.version}</version>
-                    <scope>provided</scope>
-                </dependency>
-            </dependencies>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-        </profile>
     </profiles>
 
     <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-framework-bom</artifactId>
-                <version>${spring.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
     </dependencyManagement>
 </project>
